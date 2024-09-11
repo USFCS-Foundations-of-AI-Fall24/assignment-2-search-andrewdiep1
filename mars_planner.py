@@ -102,8 +102,14 @@ def battery_goal(state) :
     return state.loc == "battery"
 ## add your goals here.
 
+def charged_goal(state) :
+    return state.charged == True
+
+def sample_goal(state) :
+    return state.sample_extracted == True and state.holding_sample == False
+
 def mission_complete(state) :
-    pass
+    return battery_goal(state) and charged_goal(state) and sample_goal(state)
 
 
 if __name__=="__main__" :
