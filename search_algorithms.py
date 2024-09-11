@@ -6,10 +6,13 @@ from collections import deque
 def breadth_first_search(startState, action_list, goal_test, use_closed_list=True) :
     search_queue = deque()
     closed_list = {}
+    state_count = 0
 
     search_queue.append((startState,""))
     if use_closed_list :
         closed_list[startState] = True
+    state_count += 1
+
     while len(search_queue) > 0 :
         ## this is a (state, "action") tuple
         next_state = search_queue.popleft()
@@ -20,6 +23,7 @@ def breadth_first_search(startState, action_list, goal_test, use_closed_list=Tru
             while ptr is not None :
                 ptr = ptr.prev
                 print(ptr)
+            print(f"Number of states generated: {state_count}")
             return next_state
         else :
             successors = next_state[0].successors(action_list)
@@ -29,6 +33,11 @@ def breadth_first_search(startState, action_list, goal_test, use_closed_list=Tru
                 for s in successors :
                     closed_list[s[0]] = True
             search_queue.extend(successors)
+            state_count += len(successors)
+
+    print("No goal found")
+    print(f"Number of states generated: {state_count}")
+    return None
 
 ### Note the similarity to BFS - the only difference is the search queue
 
@@ -36,10 +45,13 @@ def breadth_first_search(startState, action_list, goal_test, use_closed_list=Tru
 def depth_first_search(startState, action_list, goal_test, use_closed_list=True,limit=0) :
     search_queue = deque()
     closed_list = {}
+    state_count = 0
 
     search_queue.append((startState,""))
     if use_closed_list :
         closed_list[startState] = True
+    state_count += 1
+
     while len(search_queue) > 0 :
         ## this is a (state, "action") tuple
         next_state = search_queue.pop()
@@ -50,6 +62,7 @@ def depth_first_search(startState, action_list, goal_test, use_closed_list=True,
             while ptr is not None :
                 ptr = ptr.prev
                 print(ptr)
+            print(f"Number of states generated: {state_count}")
             return next_state
         else :
             successors = next_state[0].successors(action_list)
@@ -59,5 +72,10 @@ def depth_first_search(startState, action_list, goal_test, use_closed_list=True,
                 for s in successors :
                     closed_list[s[0]] = True
             search_queue.extend(successors)
+            state_count += len(successors)
+
+    print("No goal found")
+    print(f"Number of states generated: {state_count}")
+    return None
 
 ## add iterative deepening search here

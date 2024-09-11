@@ -15,6 +15,7 @@
 
 from copy import deepcopy
 from search_algorithms import breadth_first_search
+from search_algorithms import depth_first_search
 
 class RoverState :
     def __init__(self, loc="station", sample_extracted=False, holding_sample=False, charged=False):
@@ -115,6 +116,7 @@ def mission_complete(state) :
 if __name__=="__main__" :
     s = RoverState()
     result = breadth_first_search(s, action_list, mission_complete)
+    # result = depth_first_search(s, action_list, mission_complete)
     print(result)
 
 
