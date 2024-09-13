@@ -1,5 +1,4 @@
 import os
-from queue import PriorityQueue
 from Graph import *
 
 class map_state() :
@@ -34,21 +33,6 @@ class map_state() :
         return self.location == '1,1'
 
 
-def a_star(start_state, heuristic_fn, goal_test, use_closed_list=True) :
-    search_queue = PriorityQueue()
-    closed_list = {}
-    search_queue.put(start_state)
-    ## you do the rest.
-
-
-## default heuristic - we can use this to implement uniform cost search
-def h1(state) :
-    return 0
-
-## you do this - return the straight-line distance between the state and (1,1)
-def sld(state) :
-    sqt(a^ + b2)
-
 ## you implement this. Open the file filename, read in each line,
 ## construct a Graph object and assign it to self.mars_graph().
 def read_mars_graph(filename):
@@ -77,4 +61,3 @@ def read_mars_graph(filename):
                     graph.add_edge(edge)
 
     return graph
-

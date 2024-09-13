@@ -1,4 +1,6 @@
 from collections import deque
+import math
+from queue import PriorityQueue
 
 
 
@@ -136,6 +138,7 @@ def iterative_deepening_search(startState, action_list, goal_test, use_closed_li
     print(f"Number of states generated: {state_count}")
     return None
 
+
 def depth_limited_search_helper(startState, action_list, goal_test, use_closed_list=True, limit=0) :
     search_stack = []
     closed_list = {}
@@ -169,3 +172,21 @@ def depth_limited_search_helper(startState, action_list, goal_test, use_closed_l
 
     # No goal found
     return None, state_count
+
+
+def a_star(start_state, heuristic_fn, goal_test, use_closed_list=True) :
+    search_queue = PriorityQueue()
+    closed_list = {}
+    search_queue.put(start_state)
+    ## you do the rest.
+
+
+## default heuristic - we can use this to implement uniform cost search
+def h1(state) :
+    return 0
+
+
+## you do this - return the straight-line distance between the state and (1,1)
+def sld(state) :
+    x, y = map(int, state.location.split(','))
+    return math.sqrt((x - 1)**2 + (y - 1)**2)
