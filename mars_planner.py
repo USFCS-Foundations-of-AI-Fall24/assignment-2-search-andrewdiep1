@@ -154,8 +154,8 @@ def mars_planner_submission():
     print(depth_first_search(demo, action_list, mission_complete), "\n")
     print("depth_limited_search")
     print(depth_limited_search(demo, action_list, mission_complete, True, 100), "\n")
-    print("iterative_deepening_search")
-    print(iterative_deepening_search(demo, action_list, mission_complete, True, 100), "\n")
+    # print("iterative_deepening_search")
+    # print(iterative_deepening_search(demo, action_list, mission_complete, True, 100), "\n")
 
 if __name__=="__main__" :
     s = RoverState()
