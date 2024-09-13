@@ -1,0 +1,3 @@
+from mars_planner import mars_planner_submission
+
+mars_planner_submission()

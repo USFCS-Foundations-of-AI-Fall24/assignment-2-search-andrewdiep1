@@ -144,19 +144,32 @@ def remove_sample_goal(state):
 def return_to_charger_goal(state):
     return state.loc == "battery" and state.charged and not state.holding_sample and not state.holding_tool
 
+
+def mars_planner_submission():
+    print("* mars_planner_submission *")
+    demo = RoverState()
+    print("breadth_first_search")
+    print(breadth_first_search(demo, action_list, mission_complete), "\n")
+    print("depth_first_search")
+    print(depth_first_search(demo, action_list, mission_complete), "\n")
+    print("depth_limited_search")
+    print(depth_limited_search(demo, action_list, mission_complete, True, 100), "\n")
+    print("iterative_deepening_search")
+    print(iterative_deepening_search(demo, action_list, mission_complete, True, 100), "\n")
+
 if __name__=="__main__" :
     s = RoverState()
-    # result = breadth_first_search(s, action_list, mission_complete)
-    result = depth_first_search(s, action_list, mission_complete)
+    result = breadth_first_search(s, action_list, mission_complete)
+    # result = depth_first_search(s, action_list, mission_complete)
     # result = depth_limited_search(s, action_list, mission_complete, True, 100)
     # result = iterative_deepening_search(s, action_list, mission_complete, True, 100)
     print(result)
 
-    # a = depth_first_search(s, action_list, move_to_sample_goal)
-    # print(a, "\n")
-    # b = depth_first_search(a[0], action_list, remove_sample_goal)
-    # print(b, "\n")
-    # c = depth_first_search(b[0], action_list, return_to_charger_goal)
+    # a = iterative_deepening_search(s, action_list, move_to_sample_goal, True, 100)
+    # # print(a, "\n")
+    # b = iterative_deepening_search(a, action_list, remove_sample_goal, True, 100)
+    # # print(b, "\n")
+    # c = iterative_deepening_search(b, action_list, return_to_charger_goal, True, 100)
     # print(c)
 
 
