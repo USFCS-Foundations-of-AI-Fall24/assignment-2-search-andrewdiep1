@@ -14,7 +14,7 @@
 ## Charged can be True or False
 
 from copy import deepcopy
-from search_algorithms import breadth_first_search, depth_first_search, depth_limited_search
+from search_algorithms import breadth_first_search, depth_first_search, depth_limited_search, iterative_deepening_search
 
 class RoverState :
     def __init__(self, loc="station", sample_extracted=False, holding_sample=False, charged=False, holding_tool=False) :
@@ -38,7 +38,8 @@ class RoverState :
         return (f"Location: {self.loc}\n" +
                 f"Sample Extracted?: {self.sample_extracted}\n"+
                 f"Holding Sample?: {self.holding_sample}\n" +
-                f"Charged? {self.charged}")
+                f"Charged? {self.charged}\n" +
+                f"Holding Tool? {self.holding_tool}")
 
     def __hash__(self):
         return self.__repr__().__hash__()
@@ -111,7 +112,7 @@ def drop_sample(state) :
 
 def charge(state) :
     r2 = deepcopy(state)
-    if state.sample_extracted and state.loc == "sample":
+    if state.sample_extracted and state.loc == "battery":
         r2.charged = True
     r2.prev = state
     return r2
@@ -128,7 +129,7 @@ def charged_goal(state) :
     return state.charged == True
 
 def sample_goal(state) :
-    return state.sample_extracted == True and state.holding_sample == False
+    return state.sample_extracted == True and state.holding_sample == False and state.holding_tool == False
 
 def mission_complete(state) :
     return battery_goal(state) and charged_goal(state) and sample_goal(state)
@@ -138,7 +139,8 @@ if __name__=="__main__" :
     s = RoverState()
     result = breadth_first_search(s, action_list, mission_complete)
     # result = depth_first_search(s, action_list, mission_complete)
-    # result = depth_limited_search(s, action_list, mission_complete, True, 2)
+    # result = depth_limited_search(s, action_list, mission_complete, True, 100)
+    # result = iterative_deepening_search(s, action_list, mission_complete, True, 100)
     print(result)
 
 
