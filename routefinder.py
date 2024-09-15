@@ -117,3 +117,17 @@ def read_mars_graph(filename):
                     graph.add_edge(Edge(src=node_part, dest=edge_part))
 
     return graph
+
+def routefinder_submission():
+    print("* routefinder_submission *\n")
+    print("sld heuristic")
+    s1 = map_state(location="8,8")
+    s1.h = sld(s1)
+    s1.f = s1.h
+    s1 = a_star(s1, sld, map_state.is_goal)
+    print("\nh1 heuristic")
+    s2 = map_state(location="8,8")
+    s2.h = h1(s2)
+    s2.f = s2.h
+    s2 = a_star(s2, h1, map_state.is_goal)
+    print("---\n")

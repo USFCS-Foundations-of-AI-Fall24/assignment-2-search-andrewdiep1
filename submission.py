@@ -1,3 +1,5 @@
 from mars_planner import mars_planner_submission
+from routefinder import routefinder_submission
 
 mars_planner_submission()
+routefinder_submission()
