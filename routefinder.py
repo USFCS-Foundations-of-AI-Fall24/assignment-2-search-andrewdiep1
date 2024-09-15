@@ -1,15 +1,16 @@
 import math
 import os
+from queue import PriorityQueue
 from Graph import *
 
 class map_state() :
     ## f = total estimated cost
     ## g = cost so far
     ## h = estimated cost to goal
-    def __init__(self, location="", mars_graph=None,
+    def __init__(self, location="", mars_graph="./MarsMap",
                  prev_state=None, g=0,h=0):
         self.location = location
-        self.mars_graph = read_mars_graph("./MarsMap")
+        self.mars_graph = read_mars_graph(mars_graph)
         self.prev_state = prev_state
         self.g = g
         self.h = h
@@ -47,6 +48,45 @@ def sld(state) :
     x, y = map(int, state.location.split(','))
     return math.sqrt((x - 1)**2 + (y - 1)**2)
 
+
+def a_star(start_state, heuristic_fn, goal_test, use_closed_list=True) :
+    search_queue = PriorityQueue()
+    closed_list = {}
+    state_count = 0
+    search_queue.put(start_state)
+    state_count += 1
+
+    while not search_queue.empty():
+        current_state = search_queue.get()
+
+        if goal_test(current_state):
+            print("Goal found")
+            print(f"Number of states generated: {state_count}")
+            return current_state
+
+        if use_closed_list:
+            closed_list[current_state] = current_state
+
+        # explore neighbors
+        # print("current loc:", current_state.location)
+        for neighbor in current_state.mars_graph.get_edges(current_state.location):
+            new_state = map_state(location=neighbor.dest, prev_state=current_state)
+            new_state.g = current_state.g + 1
+            new_state.h = heuristic_fn(new_state)
+            new_state.f = new_state.g + new_state.h
+            # print("f:", new_state.f)
+
+            if use_closed_list and new_state in closed_list:
+                continue
+
+            search_queue.put(new_state)
+            state_count += 1
+
+    print("No goal found")
+    print(f"Number of states generated: {state_count}")
+    return None
+
+
 ## you implement this. Open the file filename, read in each line,
 ## construct a Graph object and assign it to self.mars_graph().
 def read_mars_graph(filename):
@@ -66,12 +106,14 @@ def read_mars_graph(filename):
 
                 # add node to graph
                 if node_part not in graph.g:
+                    # print("node part:", node_part)
                     graph.add_node(node_part)
 
                 # add edges
                 edges = edges_part.split()
+                # print("edges:")
                 for edge_part in edges:
-                    edge = Edge(src=node_part, dest=edge_part)
-                    graph.add_edge(edge)
+                    # print(edge_part)
+                    graph.add_edge(Edge(src=node_part, dest=edge_part))
 
     return graph
