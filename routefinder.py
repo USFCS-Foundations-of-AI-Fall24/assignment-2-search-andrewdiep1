@@ -1,3 +1,4 @@
+import math
 import os
 from Graph import *
 
@@ -8,7 +9,7 @@ class map_state() :
     def __init__(self, location="", mars_graph=None,
                  prev_state=None, g=0,h=0):
         self.location = location
-        self.mars_graph = mars_graph
+        self.mars_graph = read_mars_graph("./MarsMap")
         self.prev_state = prev_state
         self.g = g
         self.h = h
@@ -32,6 +33,19 @@ class map_state() :
     def is_goal(self):
         return self.location == '1,1'
 
+
+## default heuristic - we can use this to implement uniform cost search
+def h1(state) :
+    return 0
+
+
+## you do this - return the straight-line distance between the state and (1,1)
+def sld(state) :
+    if not state.location:
+        print("Error: Location is empty or None.")
+        return -1
+    x, y = map(int, state.location.split(','))
+    return math.sqrt((x - 1)**2 + (y - 1)**2)
 
 ## you implement this. Open the file filename, read in each line,
 ## construct a Graph object and assign it to self.mars_graph().
