@@ -40,3 +40,15 @@ model.Add(Antenna8 != Antenna9)
 
 status = solver.Solve(model)
 
+def antennae_submission():
+  print("* antennae_submission *\n")
+  if status == cp_model.OPTIMAL or status == cp_model.FEASIBLE:
+      print("Antenna 1: %s" % colors[solver.Value(Antenna1)])
+      print("Antenna 2: %s" % colors[solver.Value(Antenna2)])
+      print("Antenna 3: %s" % colors[solver.Value(Antenna3)])
+      print("Antenna 4: %s" % colors[solver.Value(Antenna4)])
+      print("Antenna 5: %s" % colors[solver.Value(Antenna5)])
+      print("Antenna 6: %s" % colors[solver.Value(Antenna6)])
+      print("Antenna 7: %s" % colors[solver.Value(Antenna7)])
+      print("Antenna 8: %s" % colors[solver.Value(Antenna8)])
+      print("Antenna 9: %s" % colors[solver.Value(Antenna9)])
