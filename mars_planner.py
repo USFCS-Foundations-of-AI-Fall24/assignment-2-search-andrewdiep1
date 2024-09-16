@@ -14,7 +14,7 @@
 ## Charged can be True or False
 
 from copy import deepcopy
-from search_algorithms import breadth_first_search, depth_first_search, depth_limited_search, iterative_deepening_search
+from search_algorithms import breadth_first_search, depth_first_search, depth_limited_search
 
 class RoverState :
     def __init__(self, loc="station", sample_extracted=False, holding_sample=False, charged=False, holding_tool=False) :
@@ -136,14 +136,13 @@ def mission_complete(state) :
     return battery_goal(state) and charged_goal(state) and sample_goal(state)
 
 def move_to_sample_goal(state):
-    return state.loc == "sample" and state.holding_tool
+    return state.loc == "sample" and state.holding_tool == True
 
 def remove_sample_goal(state):
-    return state.sample_extracted and state.holding_sample
+    return state.sample_extracted == True and state.holding_sample == True
 
 def return_to_charger_goal(state):
-    return state.loc == "battery" and state.charged and not state.holding_sample and not state.holding_tool
-
+    return state.loc == "battery" and state.charged == True and state.holding_sample == False and state.holding_tool == False
 
 def mars_planner_submission():
     print("* mars_planner_submission *\n")
@@ -160,18 +159,25 @@ def mars_planner_submission():
 
 if __name__=="__main__" :
     s = RoverState()
-    result = breadth_first_search(s, action_list, mission_complete)
+    # print("<< mission complete >>")
+    # result = breadth_first_search(s, action_list, mission_complete)
     # result = depth_first_search(s, action_list, mission_complete)
     # result = depth_limited_search(s, action_list, mission_complete, True, 100)
     # result = iterative_deepening_search(s, action_list, mission_complete, True, 100)
-    print(result)
+    # print(result, "\n")
 
-    # a = iterative_deepening_search(s, action_list, move_to_sample_goal, True, 100)
-    # # print(a, "\n")
-    # b = iterative_deepening_search(a, action_list, remove_sample_goal, True, 100)
-    # # print(b, "\n")
-    # c = iterative_deepening_search(b, action_list, return_to_charger_goal, True, 100)
-    # print(c)
+    # print("<< problem decomposition >>")
+    # a = depth_limited_search(s, action_list, move_to_sample_goal, True, 100)
+    # print(a, "\n")
+    # b = depth_limited_search(a, action_list, remove_sample_goal, True, 100)
+    # print(b, "\n")
+    # c = depth_limited_search(b, action_list, return_to_charger_goal, True, 100)
+    # print(c, "\n")
 
-
+    # s = breadth_first_search(s, action_list, move_to_sample_goal)[0]
+    # print(s, "\n")
+    # s = breadth_first_search(s, action_list, remove_sample_goal)[0]
+    # print(s, "\n")
+    # s = breadth_first_search(s, action_list, return_to_charger_goal)
+    # print(s, "\n")
 

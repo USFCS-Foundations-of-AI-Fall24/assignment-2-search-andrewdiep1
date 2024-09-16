@@ -10,11 +10,11 @@ def breadth_first_search(startState, action_list, goal_test, use_closed_list=Tru
     search_queue.append((startState,""))
     if use_closed_list :
         closed_list[startState] = True
-    state_count += 1
 
     while len(search_queue) > 0 :
         ## this is a (state, "action") tuple
         next_state = search_queue.popleft()
+        state_count += 1
         if goal_test(next_state[0]) :
             print("Goal found")
             # print(next_state, "\n")
@@ -32,7 +32,6 @@ def breadth_first_search(startState, action_list, goal_test, use_closed_list=Tru
                 for s in successors :
                     closed_list[s[0]] = True
             search_queue.extend(successors)
-            state_count += len(successors)
 
     print("No goal found")
     print(f"Number of states generated: {state_count}")
@@ -48,11 +47,11 @@ def depth_first_search(startState, action_list, goal_test, use_closed_list=True)
     search_queue.append((startState,""))
     if use_closed_list :
         closed_list[startState] = True
-    state_count += 1
 
     while len(search_queue) > 0 :
         ## this is a (state, "action") tuple
         next_state = search_queue.pop()
+        state_count += 1
         if goal_test(next_state[0]) :
             print("Goal found")
             # print(next_state)
@@ -70,7 +69,6 @@ def depth_first_search(startState, action_list, goal_test, use_closed_list=True)
                 for s in successors :
                     closed_list[s[0]] = True
             search_queue.extend(successors)
-            state_count += len(successors)
 
     print("No goal found")
     print(f"Number of states generated: {state_count}")
@@ -85,12 +83,11 @@ def depth_limited_search(startState, action_list, goal_test, use_closed_list=Tru
     search_stack.append((startState, "", 0))  # (state, action, depth)
     if use_closed_list :
         closed_list[startState] = True
-    state_count += 1
 
     while len(search_stack) > 0 :
         # This is a (state, action, depth) tuple
         next_state, action, depth = search_stack.pop()
-
+        state_count += 1
         if goal_test(next_state) :
             print(f"Goal found at depth {depth}")
             # print(next_state)
@@ -111,8 +108,6 @@ def depth_limited_search(startState, action_list, goal_test, use_closed_list=Tru
 
             for succ, action_name in successors :
                 search_stack.append((succ, action_name, depth + 1))
-
-            state_count += len(successors)
 
     print("No goal found")
     print(f"Number of states generated: {state_count}")
@@ -144,12 +139,11 @@ def depth_limited_search_helper(startState, action_list, goal_test, use_closed_l
     search_stack.append((startState, "", 0))  # (state, action, depth)
     if use_closed_list:
         closed_list[startState] = True
-    state_count += 1
 
     while len(search_stack) > 0 :
         # This is a (state, action, depth) tuple
         next_state, action, depth = search_stack.pop()
-
+        state_count += 1
         if goal_test(next_state) :
             # Goal found
             return next_state, state_count
@@ -164,8 +158,6 @@ def depth_limited_search_helper(startState, action_list, goal_test, use_closed_l
 
             for succ, action_name in successors :
                 search_stack.append((succ, action_name, depth + 1))
-
-            state_count += len(successors)
 
     # No goal found
     return None, state_count

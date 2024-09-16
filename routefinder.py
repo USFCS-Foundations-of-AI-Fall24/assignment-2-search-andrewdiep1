@@ -54,10 +54,10 @@ def a_star(start_state, heuristic_fn, goal_test, use_closed_list=True) :
     closed_list = {}
     state_count = 0
     search_queue.put(start_state)
-    state_count += 1
 
     while not search_queue.empty():
         current_state = search_queue.get()
+        state_count += 1
 
         if goal_test(current_state):
             print("Goal found")
@@ -80,7 +80,6 @@ def a_star(start_state, heuristic_fn, goal_test, use_closed_list=True) :
                 continue
 
             search_queue.put(new_state)
-            state_count += 1
 
     print("No goal found")
     print(f"Number of states generated: {state_count}")
