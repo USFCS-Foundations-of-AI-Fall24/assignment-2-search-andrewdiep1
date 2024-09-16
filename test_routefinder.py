@@ -1,6 +1,5 @@
 from unittest import TestCase
 from routefinder import *
-from search_algorithms import sld
 
 class Testmap_state(TestCase):
     def test_is_lt (self) :
